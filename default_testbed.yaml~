@@ -29,9 +29,9 @@ devices:
       defaults:
         class: unicon.Unicon
       console:
-        ip: 198.18.1.71
+        ip: 10.207.204.99
         protocol: telnet
-        port: 23
+        port: None
     custom:
       abstraction:
         order: [os, type]
@@ -47,9 +47,9 @@ devices:
       defaults:
         class: unicon.Unicon
       console:
-        ip: 198.18.1.72
+        ip: 10.207.204.99
         protocol: telnet
-        port: 23
+        port: None
     custom:
       abstraction:
         order: [os, type]
@@ -65,9 +65,9 @@ devices:
       defaults:
         class: unicon.Unicon
       console:
-        ip: 198.18.1.76
+        ip: 10.207.204.99
         protocol: telnet
-        port: 23
+        port: None
     custom:
       abstraction:
         order: [os, type]
