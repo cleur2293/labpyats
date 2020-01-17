@@ -2,6 +2,7 @@
 
 # To get a logger for the script
 import logging
+import re
 
 from pyats import aetest
 from pyats.log.utils import banner
@@ -63,12 +64,40 @@ class PingTestcase(aetest.Testcase):
       
       # execute loop for ping test
 
-      aetest.loop.mark(self.ping, dest_ips = dest_ips)
+      aetest.loop.mark(self.ping, dest_ip = dest_ips)
 
     @aetest.test
-    def ping(self,dest_ips):
+    def ping(self,dest_ip):
+       """
+       Sending 5, 56-bytes ICMP Echos to 10.0.0.18
+       Timeout is 2 seconds, data pattern is 0xABCD
 
-       result =  nx = self.parent.parameters['testbed'].devices['nx-osv-1'].ping(dest_ips)
+       64 bytes from 10.0.0.18: icmp_seq=0 ttl=255 time=0.594 ms
+       64 bytes from 10.0.0.18: icmp_seq=1 ttl=255 time=0.837 ms
+       64 bytes from 10.0.0.18: icmp_seq=2 ttl=255 time=0.761 ms
+       64 bytes from 10.0.0.18: icmp_seq=3 ttl=255 time=0.594 ms
+       64 bytes from 10.0.0.18: icmp_seq=4 ttl=255 time=0.565 ms
+
+       --- 10.0.0.18 ping statistics ---
+       5 packets transmitted, 5 packets received, 0.00% packet loss
+       round-trip min/avg/max = 0.565/0.67/0.837 ms
+
+       """
+
+       nx = self.parent.parameters['testbed'].devices['nx-osv-1']
+
+       try:
+          result = nx.ping(dest_ip)
+       except Exception as e:
+          self.failed(f'Ping from {nx.name}->{dest_ip} failed: {e}')
+       else:
+          m = re.search(r"(?P<rate>\d+)\.\d+% packet loss", result)
+          loss_rate = m.group('rate')
+
+          if int(loss_rate) < 20:
+            self.passed(f'Ping loss rate {loss_rate}%')
+          else:
+            self.failed('Ping loss rate {loss_rate}%')
 
 
 if __name__ == '__main__': # pragma: no cover
