@@ -41,41 +41,34 @@ class PingTestcase(aetest.Testcase):
 
       dest_ips = [] # list to store all IPs from topology
 
-      for device in self.parent.parameters['dev']:
-        for intf in device:
-          print(f'{device.name}:{intf.name}:{intf.ipv4}')      
-
-          
-          dest_ips.append(str(intf.ipv4))
-
-          result = self.parent.parameters['testbed'].devices['nx-osv-1'].ping('8.8.8.8')
-          print(result)
-
-
-    @aetest.test
-    def ping(self):
-
-
       nx = self.parent.parameters['testbed'].devices['nx-osv-1']
       csr = self.parent.parameters['testbed'].devices['csr1000v-1']
-
-      dest_links = csr.find_links(nx)
       
-      for intf in csr.interfaces:
- #stopped here
-        if intf.name in 
-          dest_ip.append(str(intf.ipv4.ip))
-        
+      # Find links between Nx-os device and CSR100v
+      dest_links = nx.find_links(csr)
+      dest_ips = []
 
+      for links in dest_links:
+         # process each link between devices
 
+         for iface in links.interfaces:
+            # process each interface (side) of the linki
+            if iface.ipv4 is not None:
+              print(f'{iface.name}:{iface.ipv4.ip}')
+              dest_ips.append(iface.ipv4.ip)
+            else:
+              print(f'Skipping iface {iface.name} without IPv4 address')
+      
+      print(f'Collected following IP addresses: {dest_ips}')
+      
+      # execute loop for ping test
 
-      try:
-            # store command result for later usage
-            result =  self.parent.parameters['testbed'].devices['nx-osv-1'].ping(destination)
+      aetest.loop.mark(self.ping, dest_ips = dest_ips)
 
+    @aetest.test
+    def ping(self,dest_ips):
 
-
-
+       result =  nx = self.parent.parameters['testbed'].devices['nx-osv-1'].ping(dest_ips)
 
 
 if __name__ == '__main__': # pragma: no cover
