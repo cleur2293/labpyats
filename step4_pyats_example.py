@@ -53,7 +53,7 @@ class Logging(aetest.Testcase):
          asav-1#
          """         
 
-         self.failed('Found ERROR in log, review them first')
+         self.failed('Found ERROR in log, review logs first')
        else:
          pass
 
