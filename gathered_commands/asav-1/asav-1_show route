@@ -1,0 +1,18 @@
+
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, V - VPN
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, + - replicated route
+Gateway of last resort is not set
+
+C        10.0.0.4 255.255.255.252 is directly connected, outside
+L        10.0.0.5 255.255.255.255 is directly connected, outside
+C        10.0.0.8 255.255.255.252 is directly connected, outside-1
+L        10.0.0.9 255.255.255.255 is directly connected, outside-1
+O        10.0.0.12 255.255.255.252 [110/50] via 10.0.0.6, 23:41:17, outside
+O        10.0.0.16 255.255.255.252 [110/50] via 10.0.0.6, 23:41:17, outside
+O        192.168.0.1 255.255.255.255 [110/11] via 10.0.0.6, 23:41:17, outside
+O        192.168.0.3 255.255.255.255 [110/51] via 10.0.0.6, 23:41:17, outside
