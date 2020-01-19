@@ -1,5 +1,0 @@
-
-
-Neighbor ID     Pri   State           Dead Time   Address         Interface
-192.168.0.1       1   FULL/DR         0:00:35    10.0.0.10       outside-1
-192.168.0.1       1   FULL/DR         0:00:35    10.0.0.6        outside
