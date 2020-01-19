@@ -1,2 +1,5 @@
 # Ignore folder for gathered commands 'gathered_commands'
 gathered_commands/
+
+# Ignore folder for pyats job cache files
+__pycache__/
