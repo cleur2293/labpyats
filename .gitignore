@@ -1,0 +1,8 @@
+# Ignore folder for gathered commands 'gathered_commands'
+gathered_commands/
+
+# Ignore folder for pyats job cache files
+__pycache__/
+
+# Ignore testbed file since user should create it using virlutils
+pyats_testbed.yaml
