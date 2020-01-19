@@ -12,7 +12,7 @@ from genie.conf import Genie
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
-golden_routes = ['192.168.0.3/32','192.168.0.1/32']
+contract_sn = ['923C9IN3KU1','93NA29NSARX','9AHA4AWEDBR']
 
 class common_setup(aetest.CommonSetup):
 
@@ -35,35 +35,44 @@ class common_setup(aetest.CommonSetup):
         self.parent.parameters.update(dev=device_list)
 
 
-class Routing(aetest.Testcase):
+class Inventory(aetest.Testcase):
 
     @aetest.setup
     def setup(self):
         devices = self.parent.parameters['dev']
-        aetest.loop.mark(self.routes, device=devices)
+        aetest.loop.mark(self.inventory, device=devices)
 
     @aetest.test
-    def routes(self,device):
+    def inventory(self,device):
 
-       if device.os == ('iosxe' or 'nxos'):
+       if device.os == ('iosxe'):
 
-         output = device.learn('routing')
-         rib = output.info['vrf']['default']['address_family']['ipv4']['routes']
+         output = device.parse('show inventory')
+         chassis_sn = output['main']['chassis']['CSR1000V']['sn']
 
-         for route in golden_routes:
-           if route not in rib:
-             self.failed(f'{route} is not found')
-           else:
+         if chassis_sn not in contract_sn:
+             self.failed(f'{chassis_sn} is not covered by contract')
+         else:
+             pass
+
+       elif device.os == 'nxos':
+
+         output = device.parse('show inventory')
+         chassis_sn = output['name']['Chassis']['serial_number']
+
+         if chassis_sn not in contract_sn:
+             self.failed(f'{chassis_sn} is not covered by contract')
+         else:
              pass
 
        elif device.os == 'asa':
-         output = device.parse('show route')
-         rib = output['vrf']['default']['address_family']['ipv4']['routes']
 
-         for route in golden_routes:
-           if route not in rib:
-             self.failed(f'{route} is not found')
-           else:
+         output = device.parse('show inventory')
+         chassis_sn = output['Chassis']['sn']
+
+         if chassis_sn not in contract_sn:
+             self.failed(f'{chassis_sn} is not covered by contract')
+         else:
              pass
 
 
