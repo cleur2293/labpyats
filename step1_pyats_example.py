@@ -19,10 +19,10 @@ class common_setup(aetest.CommonSetup):
     def establish_connections(self,testbed):
         print(f'AAAAA:{dir(self.parent)}')
 
-
         print(f'BBBBB:{typeof(self)}')
-
+        print(typeof(self))
         print(f'CCCCC:{typeof(self.parent)}')
+        print(typeof(self.parent))
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -41,21 +41,12 @@ class common_setup(aetest.CommonSetup):
 
 class Logging(aetest.Testcase):
 
-    @aetest.setup
-    def setup(self):
-        devices = self.parent.parameters['dev']
-        aetest.loop.mark(self.logging, device=devices)
-
     @aetest.test
-    def logging(self,device):
+    def logging(self):
 
        output = device.execute('show logging | i ERROR|WARN')
 
        if len(output) > 0:
-         """
-         show logging | i ERROR|WARN
-         asav-1#
-         """         
 
          self.failed('Found ERROR in log, review logs first')
        else:
