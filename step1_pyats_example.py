@@ -34,10 +34,10 @@ class common_setup(aetest.CommonSetup):
         self.parent.parameters.update(dev=device_list)
 
 
-class Logging(aetest.Testcase):
+class VerifyLogging(aetest.Testcase):
 
     @aetest.test
-    def logging(self):
+    def error_logs(self):
 
        output = device.execute('show logging | i ERROR|WARN')
 
