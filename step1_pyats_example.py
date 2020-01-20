@@ -39,10 +39,11 @@ class VerifyLogging(aetest.Testcase):
     @aetest.test
     def error_logs(self):
 
-       output = device.execute('show logging | i ERROR|WARN')
+
+       any_device = self.parent.parameters['dev'][0]
+       output = any_device.execute('show logging | i ERROR|WARN')
 
        if len(output) > 0:
-
          self.failed('Found ERROR in log, review logs first')
        else:
          pass
