@@ -3,6 +3,7 @@
 # To get a logger for the script
 import logging
 
+# Import of PyATS library
 from pyats import aetest
 from pyats.log.utils import banner
 
@@ -14,12 +15,13 @@ log = logging.getLogger(__name__)
 
 class common_setup(aetest.CommonSetup):
 
-
     @aetest.subsection
     def establish_connections(self,testbed):
+        # Load testbed file which is passed as commmand-line argument
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
+        # Load all devices from testbed file and try to connect to them
         for device in genie_testbed.devices.values():
             log.info(banner(
                 "Connect to device '{d}'".format(d=device.name)))
@@ -33,29 +35,7 @@ class common_setup(aetest.CommonSetup):
         self.parent.parameters.update(dev=device_list)
 
 
-class Logging(aetest.Testcase):
-
-    @aetest.setup
-    def setup(self):
-        devices = self.parent.parameters['dev']
-        aetest.loop.mark(self.logging, device=devices)
-
-    @aetest.test
-    def logging(self,device):
-
-       output = device.execute('show logging | i ERROR|WARN')
-
-       if len(output) > 0:
-         """
-         show logging | i ERROR|WARN
-         asav-1#
-         """         
-
-         self.failed('Found ERROR in log, review logs first')
-       else:
-         pass
-
-if __name__ == '__main__': # pragma: no cover
+if __name__ == '__main__':
 
     import argparse
     from pyats.topology import loader
