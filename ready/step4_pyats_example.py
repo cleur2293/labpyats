@@ -15,7 +15,7 @@ from unicon.core import errors
 
 # Get your logger for your script
 log = logging.getLogger(__name__)
-
+log.level = logging.INFO
 
 class common_setup(aetest.CommonSetup):
 
@@ -57,12 +57,12 @@ class PingTestcase(aetest.Testcase):
             for iface in links.interfaces:
                 # process each interface (side) of the linki
                 if iface.ipv4 is not None:
-                    print(f'{iface.name}:{iface.ipv4.ip}')
+                    log.info(f'{iface.name}:{iface.ipv4.ip}')
                     dest_ips.append(iface.ipv4.ip)
                 else:
-                    print(f'Skipping iface {iface.name} without IPv4 address')
+                    log.info(f'Skipping iface {iface.name} without IPv4 address')
 
-        print(f'Collected following IP addresses: {dest_ips}')
+        log.info(f'Collected following IP addresses: {dest_ips}')
 
         # execute loop for ping test
 
