@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 golden_routes = ['192.168.0.3/32', '192.168.0.1/32']
 
 
-class common_setup(aetest.CommonSetup):
+class MyCommonSetup(aetest.CommonSetup):
 
     @aetest.subsection
     def establish_connections(self, testbed):

@@ -16,15 +16,10 @@ from unicon.core import errors
 log = logging.getLogger(__name__)
 
 
-class common_setup(aetest.CommonSetup):
+class MyCommonSetup(aetest.CommonSetup):
 
     @aetest.subsection
     def establish_connections(self, testbed):
-        print(f'AAAAA:{dir(self.parent)}')
-
-        print(f'BBBBB:{typeof(self)}')
-
-        print(f'CCCCC:{typeof(self.parent)}')
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []

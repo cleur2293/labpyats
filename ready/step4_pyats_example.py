@@ -17,7 +17,7 @@ from unicon.core import errors
 log = logging.getLogger(__name__)
 log.level = logging.INFO
 
-class common_setup(aetest.CommonSetup):
+class MyCommonSetup(aetest.CommonSetup):
 
     @aetest.subsection
     def establish_connections(self, testbed):
