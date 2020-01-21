@@ -1,4 +1,5 @@
-# LABOPS-1775 Automated testing for your network (pyATS/Genie)
+# LABOPS-1775 
+# Automated testing for your network (pyATS/Genie)
 
 This repository contains files required for the participants of Cisco Live EU 2020 Walked-in Self-paced Labs (WISP):
 
@@ -36,14 +37,14 @@ https://www.w3schools.com/python
 Virlutils: https://github.com/CiscoDevNet/virlutils
 pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
-Related Sessions at Ciscolive
-•	Network Assurance: pyATS/Genie for Network Engineers
+# Related Sessions at Ciscolive
+- Network Assurance: pyATS/Genie for Network Engineers
 DEVNET-1204.
-•	DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners
+- DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners
 DEVWKS-2808.
-•	DevNet Workshop: Network Verification with pyATS/Genie for non-programmers
+- DevNet Workshop: Network Verification with pyATS/Genie for non-programmers
 DEVWKS-2595.
-•	DevNet Workshop: pyATS Intro - creating parsers with GENIE
+- DevNet Workshop: pyATS Intro - creating parsers with GENIE
 DEVWKS-2601.
-•	DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements
+- DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements
 DEVWKS-1407.
