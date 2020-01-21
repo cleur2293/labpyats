@@ -6,3 +6,6 @@ __pycache__/
 
 # Ignore testbed file since user should create it using virlutils
 pyats_testbed.yaml
+
+# Ignore idea folder from PyCharm
+.idea/
