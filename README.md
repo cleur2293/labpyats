@@ -14,7 +14,6 @@ During the lab participants will be able to:
 - learn platform capabilities
 - testbed creation
 - state of network validation
-- profiling of network, using Robot framework
 - test state of network after failures
 
 
