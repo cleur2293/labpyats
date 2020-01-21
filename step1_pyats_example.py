@@ -44,13 +44,6 @@ class VerifyLogging(aetest.Testcase):
     def error_logs(self):
 
 
-       any_device = self.parent.parameters['dev'][0]
-       output = any_device.execute('show logging | i ERROR|WARN')
-
-       if len(output) > 0:
-         self.failed('Found ERROR in log, review logs first')
-       else:
-         pass
 
 if __name__ == '__main__': # pragma: no cover
 
