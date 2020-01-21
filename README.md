@@ -39,7 +39,7 @@ Bring potential use-cases for PyATS/Genie in participants' networks.
 Recommended readings:
 =======================================================
 Basic Python knowledge is desirable but not required:
-- Python https://www.w3schools.com/python
+- Python: https://www.w3schools.com/python
 - Virlutils: https://github.com/CiscoDevNet/virlutils
 - pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
