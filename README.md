@@ -41,12 +41,18 @@ pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
 # Related Sessions at Ciscolive
 - Network Assurance: pyATS/Genie for Network Engineers
+
 DEVNET-1204.
 - DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners
+
 DEVWKS-2808.
 - DevNet Workshop: Network Verification with pyATS/Genie for non-programmers
+
 DEVWKS-2595.
 - DevNet Workshop: pyATS Intro - creating parsers with GENIE
+
 DEVWKS-2601.
 - DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements
+
 DEVWKS-1407.
+
