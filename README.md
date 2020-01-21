@@ -39,10 +39,9 @@ Bring potential use-cases for PyATS/Genie in participants' networks.
 Recommended readings:
 =======================================================
 Basic Python knowledge is desirable but not required:
-
-https://www.w3schools.com/python
-Virlutils: https://github.com/CiscoDevNet/virlutils
-pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
+- Python https://www.w3schools.com/python
+- Virlutils: https://github.com/CiscoDevNet/virlutils
+- pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
 # Related Sessions at Ciscolive
 - Network Assurance: pyATS/Genie for Network Engineers
