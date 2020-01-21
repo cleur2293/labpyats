@@ -18,9 +18,19 @@ log = logging.getLogger(__name__)
 log.level = logging.INFO
 
 class MyCommonSetup(aetest.CommonSetup):
+    """
+    CommonSetup class to prepare for testcases
+    Establishes connections to all devices in testbed
+    """
 
     @aetest.subsection
     def establish_connections(self, testbed):
+        """
+        Establishes connections to all devices in testbed
+        :param testbed:
+        :return:
+        """
+
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -38,9 +48,18 @@ class MyCommonSetup(aetest.CommonSetup):
 
 
 class PingTestcase(aetest.Testcase):
+    """"
+    PingTestcase - find links between NX-OS device and CSR1000v
+    Extract IP addresses from both ends of each link
+    Run ping command for each extracted IP address from NX-OS and CSR1000v
+    """
 
     @aetest.setup
     def setup(self):
+        """
+        Extract IP addresses from both ends of each link
+        Between NX-OS device and CSR1000v
+        """
 
         # list to store all IPs from topology
         dest_ips = []
@@ -48,14 +67,15 @@ class PingTestcase(aetest.Testcase):
         nx = self.parent.parameters['testbed'].devices['nx-osv-1']
         csr = self.parent.parameters['testbed'].devices['csr1000v-1']
 
-        # Find links between Nx-os device and CSR100v
+        # Find links between NX-OS device and CSR1000v
         dest_links = nx.find_links(csr)
 
         for links in dest_links:
             # process each link between devices
 
             for iface in links.interfaces:
-                # process each interface (side) of the linki
+                # process each interface (side) of the link and extract IP address from it
+
                 if iface.ipv4 is not None:
                     log.info(f'{iface.name}:{iface.ipv4.ip}')
                     dest_ips.append(iface.ipv4.ip)
@@ -64,27 +84,27 @@ class PingTestcase(aetest.Testcase):
 
         log.info(f'Collected following IP addresses: {dest_ips}')
 
-        # execute loop for ping test
+        # run ping testcase for each collected dest_ips
 
         aetest.loop.mark(self.ping, dest_ip=dest_ips)
 
     @aetest.test
     def ping(self, dest_ip):
         """
-       Sending 5, 56-bytes ICMP Echos to 10.0.0.18
-       Timeout is 2 seconds, data pattern is 0xABCD
+        Run ping command for each IP address (dest_ip) from NX-OS and CSR1000v
+        Parse collected output to generate result of test
 
-       64 bytes from 10.0.0.18: icmp_seq=0 ttl=255 time=0.594 ms
-       64 bytes from 10.0.0.18: icmp_seq=1 ttl=255 time=0.837 ms
-       64 bytes from 10.0.0.18: icmp_seq=2 ttl=255 time=0.761 ms
-       64 bytes from 10.0.0.18: icmp_seq=3 ttl=255 time=0.594 ms
-       64 bytes from 10.0.0.18: icmp_seq=4 ttl=255 time=0.565 ms
+        Sending 5, 56-bytes ICMP Echos to 10.0.0.18
+        Timeout is 2 seconds, data pattern is 0xABCD
 
-       --- 10.0.0.18 ping statistics ---
-       5 packets transmitted, 5 packets received, 0.00% packet loss
-       round-trip min/avg/max = 0.565/0.67/0.837 ms
+        64 bytes from 10.0.0.18: icmp_seq=0 ttl=255 time=0.594 ms
+        <...>
 
-       """
+        --- 10.0.0.18 ping statistics ---
+        5 packets transmitted, 5 packets received, 0.00% packet loss
+        round-trip min/avg/max = 0.565/0.67/0.837 ms
+
+        """
 
         nx = self.parent.parameters['testbed'].devices['nx-osv-1']
 

@@ -17,9 +17,19 @@ log = logging.getLogger(__name__)
 
 
 class MyCommonSetup(aetest.CommonSetup):
+    """
+    CommonSetup class to prepare for testcases
+    Establishes connections to all devices in testbed
+    """
 
     @aetest.subsection
     def establish_connections(self, testbed):
+        """
+        Establishes connections to all devices in testbed
+        :param testbed:
+        :return:
+        """
+
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -37,14 +47,26 @@ class MyCommonSetup(aetest.CommonSetup):
 
 
 class VerifyLogging(aetest.Testcase):
+    """
+    VerifyLogging Testcase - collect show logging information from devices
+    Verify that all devices do not have 'ERROR|WARN' messages in logs
+    """
 
     @aetest.setup
     def setup(self):
+        """
+        Get list of all devices in testbed and run error_logs testcase for each device
+        :return:
+        """
+
         devices = self.parent.parameters['dev']
         aetest.loop.mark(self.logging, device=devices)
 
     @aetest.test
     def error_logs(self, device):
+        """
+        Verify that all devices do not have 'ERROR|WARN' messages in logs
+        """
 
         output = device.execute('show logging | i ERROR|WARN')
 

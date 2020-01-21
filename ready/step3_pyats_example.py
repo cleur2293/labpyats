@@ -19,9 +19,19 @@ golden_routes = ['192.168.0.3/32', '192.168.0.1/32']
 
 
 class MyCommonSetup(aetest.CommonSetup):
+    """
+    CommonSetup class to prepare for testcases
+    Establishes connections to all devices in testbed
+    """
 
     @aetest.subsection
     def establish_connections(self, testbed):
+        """
+        Establishes connections to all devices in testbed
+        :param testbed:
+        :return:
+        """
+
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -39,14 +49,26 @@ class MyCommonSetup(aetest.CommonSetup):
 
 
 class Routing(aetest.Testcase):
+    """
+    Routing Testcase - extract routing information from devices
+    Verify that all device have golden_routes installed in RIB
+    """
 
     @aetest.setup
     def setup(self):
+        """
+        Get list of all devices in testbed and run routes testcase for each device
+        :return:
+        """
+
         devices = self.parent.parameters['dev']
         aetest.loop.mark(self.routes, device=devices)
 
     @aetest.test
     def routes(self, device):
+        """
+        Verify that all device have golden_routes installed in RIB
+        """
 
         if device.os == ('iosxe' or 'nxos'):
 

@@ -17,9 +17,18 @@ log = logging.getLogger(__name__)
 
 
 class MyCommonSetup(aetest.CommonSetup):
+    """
+    CommonSetup class to prepare for testcases
+    Establishes connections to all devices in testbed
+    """
 
     @aetest.subsection
     def establish_connections(self, testbed):
+        """
+        Establishes connections to all devices in testbed
+        :param testbed:
+        :return:
+        """
 
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
@@ -38,7 +47,11 @@ class MyCommonSetup(aetest.CommonSetup):
 
 
 class VerifyLogging(aetest.Testcase):
-
+    """
+    VerifyLogging Testcase - collect show logging information from devices
+    Verify that all devices do not have 'ERROR|WARN' messages in logs
+    """
+    
     @aetest.setup
     def setup(self):
         pass
