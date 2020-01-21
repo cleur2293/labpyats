@@ -8,9 +8,13 @@ This repository contains files required for the participants of Cisco Live EU 20
 Abstract
 ================================================
 Today automation of time consuming network operations is not a trend but MUST for all network engineers.
+
 We in CX team see huge demand from our customers for all automation topics, especially for automation of network testing.
+
 Cisco released PyATS/Genie framework for test automation and a lot of our customers struggle to implement this automation ecosystem in their networks.
+
 This tool is have a great opportunities, but it is always hard to change way that people get used to behave previous 20 years.
+
 We will introduce participants with reald-world examples and give them  fast start for test automation in their networks.
 
 During the lab participants will be able to:
@@ -34,7 +38,8 @@ Bring potential use-cases for PyATS/Genie in participants' networks.
 
 Recommended readings:
 =======================================================
-Basic Python knowledge is desirable but not required: 
+Basic Python knowledge is desirable but not required:
+
 https://www.w3schools.com/python
 Virlutils: https://github.com/CiscoDevNet/virlutils
 pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
