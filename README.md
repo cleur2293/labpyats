@@ -3,6 +3,8 @@
 
 This repository contains files required for the participants of Cisco Live EU 2020 Walked-in Self-paced Labs (WISP):
 
+![alt text](https://pubhub.devnetcloud.com/media/pyats/docs/_images/logo.png)
+
 Abstract
 ================================================
 Today automation of time consuming network operations is not a trend but MUST for all network engineers.
