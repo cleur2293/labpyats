@@ -47,8 +47,8 @@ class Inventory(aetest.Testcase):
 
        if device.os == ('iosxe'):
 
-         output = device.parse('show inventory')
-         chassis_sn = output['main']['chassis']['CSR1000V']['sn']
+         out1 = device.parse('show inventory')
+         chassis_sn = out1['main']['chassis']['CSR1000V']['sn']
 
          if chassis_sn not in contract_sn:
              self.failed(f'{chassis_sn} is not covered by contract')
@@ -57,8 +57,8 @@ class Inventory(aetest.Testcase):
 
        elif device.os == 'nxos':
 
-         output = device.parse('show inventory')
-         chassis_sn = output['name']['Chassis']['serial_number']
+         out3 = device.parse('show inventory')
+         chassis_sn = <<replace me>>
 
          if chassis_sn not in contract_sn:
              self.failed(f'{chassis_sn} is not covered by contract')
@@ -67,8 +67,8 @@ class Inventory(aetest.Testcase):
 
        elif device.os == 'asa':
 
-         output = device.parse('show inventory')
-         chassis_sn = output['Chassis']['sn']
+         out2 = device.parse('show inventory')
+         chassis_sn = <<replace me>>
 
          if chassis_sn not in contract_sn:
              self.failed(f'{chassis_sn} is not covered by contract')

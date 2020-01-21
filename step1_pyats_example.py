@@ -36,6 +36,10 @@ class common_setup(aetest.CommonSetup):
 
 class VerifyLogging(aetest.Testcase):
 
+    @aetest.setup
+    def setup(self):
+       pass
+
     @aetest.test
     def error_logs(self):
 

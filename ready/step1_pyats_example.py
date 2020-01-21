@@ -39,7 +39,7 @@ class common_setup(aetest.CommonSetup):
         self.parent.parameters.update(dev=device_list)
 
 
-class Logging(aetest.Testcase):
+class VerifyLogging(aetest.Testcase):
 
     @aetest.setup
     def setup(self):
@@ -47,16 +47,11 @@ class Logging(aetest.Testcase):
         aetest.loop.mark(self.logging, device=devices)
 
     @aetest.test
-    def logging(self,device):
+    def error_logs(self,device):
 
        output = device.execute('show logging | i ERROR|WARN')
 
        if len(output) > 0:
-         """
-         show logging | i ERROR|WARN
-         asav-1#
-         """         
-
          self.failed('Found ERROR in log, review logs first')
        else:
          pass

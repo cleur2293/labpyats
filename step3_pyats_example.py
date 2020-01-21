@@ -48,7 +48,7 @@ class Routing(aetest.Testcase):
        if device.os == ('iosxe' or 'nxos'):
 
          output = device.learn('routing')
-         rib = output.info['vrf']['default']['address_family']['ipv4']['routes']
+         rib = <<replace me>>
 
          for route in golden_routes:
            if route not in rib:
