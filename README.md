@@ -36,14 +36,15 @@ Goal of the Session
 Provide practical experience working with PyATS/Genie for automation of networks.
 Bring potential use-cases for PyATS/Genie in participants' networks.
 
-Recommended readings:
+Recommended readings
 =======================================================
 Basic Python knowledge is desirable but not required:
 - Python: https://www.w3schools.com/python
 - Virlutils: https://github.com/CiscoDevNet/virlutils
 - pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
-# Related Sessions at Ciscolive
+Related Sessions at Ciscolive
+=========================================================
 - Network Assurance: pyATS/Genie for Network Engineers
 
 DEVNET-1204.
