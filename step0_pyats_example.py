@@ -11,7 +11,7 @@ from unicon.core import errors
 log = logging.getLogger(__name__)
 log.level = logging.INFO
 
-testbed = './default_testbed.yaml'
+testbed = './pyats_testbed.yaml'
 testbed = Genie.init(testbed)
 
 
@@ -35,25 +35,16 @@ def write_commands_to_file(abs_filename, command_output):
         log.error(f'Unable to write output to file: {abs_filename}. Insufficient privileges. Error: {e}')
 
 
-def main():
-    commands_to_gather = {
-        'asav-1': ['show inventory', 'show running-config', 'show route', 'show ospf neighbor', 'show license all'],
-        'csr1000v-1': ['show inventory', 'show running-config', 'show ip route vrf *', 'show ip ospf neighbor',
-                       'show license feature'],
-        'nx-osv-1': ['show inventory', 'show running-config', 'show ip route vrf all', 'show ip ospf neighbor vrf all',
-                     'show license usage']}
-
-    dir_name = 'gathered_commands'
+def collect_device_commands(commands_to_gather, dir_name):
     abs_dir_path = path.join(path.dirname(__file__), dir_name)
 
     create_non_existing_dir(abs_dir_path)
 
-    for device_name in testbed.devices:
+    for device_name, device in testbed.devices.items():
 
+        device_os = device.os #  get operating system of a device from pyats_testbed.yaml
         device_path = path.join(abs_dir_path, device_name)
         create_non_existing_dir(device_path)
-
-        device = testbed.devices[device_name]
 
         try:
             device.connect(stdout=False)
@@ -64,15 +55,33 @@ def main():
         device.connectionmgr.log.setLevel(logging.ERROR)
         # device.log_user(enable=False)
 
-        for command in commands_to_gather[device_name]:
-            filename = device_name + '_' + command
-            abs_filename = path.join(device_path, filename)
-            log.info(f'filename = {abs_filename}')
+        if commands_to_gather.get(device_os):
+            for command in commands_to_gather[device_os]:
+                filename = device_name + '_' + command
+                abs_filename = path.join(device_path, filename)
+                log.info(f'filename = {abs_filename}')
 
-            command_output = device.execute(command)
+                command_output = device.execute(command)
 
-            write_commands_to_file(abs_filename, command_output)
+                write_commands_to_file(abs_filename, command_output)
+        else:
+            log.error(f'No commands for operating system: {device_os} of device: {device_name} has been defined. This device has been skipped. Specify list of commands for {device_os} and try again.')
+
+
+def main():
+    commands_to_gather = {
+        'asa': ['show inventory', 'show running-config', 'show route', 'show ospf neighbor', 'show license all'],
+        'iosxe': ['show inventory', 'show running-config', 'show ip route vrf *', 'show ip ospf neighbor',
+                       'show license feature'],
+        'nxos': ['show inventory', 'show running-config', 'show ip route vrf all', 'show ip ospf neighbor vrf all',
+                       'show license usage']}
+
+    dir_name = 'gathered_commands'
+
+    collect_device_commands(commands_to_gather, dir_name)
 
 
 if __name__ == '__main__':
     main()
+
+
