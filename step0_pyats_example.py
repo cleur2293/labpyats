@@ -5,6 +5,7 @@ from genie.conf import Genie
 from os import path
 from os import mkdir
 
+# To handel errors with connections to devices
 from unicon.core import errors
 
 log = logging.getLogger(__name__)
@@ -33,11 +34,14 @@ def write_commands_to_file(abs_filename, command_output):
     except PermissionError as e:
         log.error(f'Unable to write output to file: {abs_filename}. Insufficient privileges. Error: {e}')
 
+
 def main():
     commands_to_gather = {
-    'asav-1': ['show inventory','show running-config', 'show route', 'show ospf neighbor', 'show license all'],
-    'csr1000v-1': ['show inventory','show running-config', 'show ip route vrf *', 'show ip ospf neighbor', 'show license feature'],
-    'nx-osv-1': ['show inventory','show running-config', 'show ip route vrf all', 'show ip ospf neighbor vrf all', 'show license usage']}
+        'asav-1': ['show inventory', 'show running-config', 'show route', 'show ospf neighbor', 'show license all'],
+        'csr1000v-1': ['show inventory', 'show running-config', 'show ip route vrf *', 'show ip ospf neighbor',
+                       'show license feature'],
+        'nx-osv-1': ['show inventory', 'show running-config', 'show ip route vrf all', 'show ip ospf neighbor vrf all',
+                     'show license usage']}
 
     dir_name = 'gathered_commands'
     abs_dir_path = path.join(path.dirname(__file__), dir_name)
@@ -46,7 +50,7 @@ def main():
 
     for device_name in testbed.devices:
 
-        device_path =  path.join(abs_dir_path, device_name)
+        device_path = path.join(abs_dir_path, device_name)
         create_non_existing_dir(device_path)
 
         device = testbed.devices[device_name]
@@ -69,7 +73,6 @@ def main():
 
             write_commands_to_file(abs_filename, command_output)
 
+
 if __name__ == '__main__':
     main()
-
-

@@ -9,16 +9,18 @@ from pyats.log.utils import banner
 # Genie Imports
 from genie.conf import Genie
 
+# To handel errors with connections to devices
+from unicon.core import errors
+
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
+
 class common_setup(aetest.CommonSetup):
 
-
     @aetest.subsection
-    def establish_connections(self,testbed):
+    def establish_connections(self, testbed):
         print(f'AAAAA:{dir(self.parent)}')
-
 
         print(f'BBBBB:{typeof(self)}')
 
@@ -31,7 +33,7 @@ class common_setup(aetest.CommonSetup):
                 "Connect to device '{d}'".format(d=device.name)))
             try:
                 device.connect()
-            except Exception as e:
+            except errors.ConnectionError:
                 self.failed("Failed to establish connection to '{}'".format(
                     device.name))
             device_list.append(device)
@@ -47,25 +49,25 @@ class VerifyLogging(aetest.Testcase):
         aetest.loop.mark(self.logging, device=devices)
 
     @aetest.test
-    def error_logs(self,device):
+    def error_logs(self, device):
 
-       output = device.execute('show logging | i ERROR|WARN')
+        output = device.execute('show logging | i ERROR|WARN')
 
-       if len(output) > 0:
-         self.failed('Found ERROR in log, review logs first')
-       else:
-         pass
+        if len(output) > 0:
+            self.failed('Found ERROR in log, review logs first')
+        else:
+            pass
 
-if __name__ == '__main__': # pragma: no cover
+
+if __name__ == '__main__':  # pragma: no cover
 
     import argparse
     from pyats.topology import loader
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest = 'testbed',
-                        type = loader.load)
+    parser.add_argument('--testbed', dest='testbed',
+                        type=loader.load)
 
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
-

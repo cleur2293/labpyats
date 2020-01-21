@@ -9,16 +9,19 @@ from pyats.log.utils import banner
 # Genie Imports
 from genie.conf import Genie
 
+# To handel errors with connections to devices
+from unicon.core import errors
+
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
-contract_sn = ['923C9IN3KU1','93NA29NSARX','9AHA4AWEDBR']
+contract_sn = ['923C9IN3KU1', '93NA29NSARX', '9AHA4AWEDBR']
+
 
 class common_setup(aetest.CommonSetup):
 
-
     @aetest.subsection
-    def establish_connections(self,testbed):
+    def establish_connections(self, testbed):
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -27,7 +30,7 @@ class common_setup(aetest.CommonSetup):
                 "Connect to device '{d}'".format(d=device.name)))
             try:
                 device.connect()
-            except Exception as e:
+            except errors.ConnectionError:
                 self.failed("Failed to establish connection to '{}'".format(
                     device.name))
             device_list.append(device)
@@ -43,49 +46,48 @@ class Inventory(aetest.Testcase):
         aetest.loop.mark(self.inventory, device=devices)
 
     @aetest.test
-    def inventory(self,device):
+    def inventory(self, device):
 
-       if device.os == ('iosxe'):
+        if device.os == 'iosxe':
 
-         out1 = device.parse('show inventory')
-         chassis_sn = out1['main']['chassis']['CSR1000V']['sn']
+            out1 = device.parse('show inventory')
+            chassis_sn = out1['main']['chassis']['CSR1000V']['sn']
 
-         if chassis_sn not in contract_sn:
-             self.failed(f'{chassis_sn} is not covered by contract')
-         else:
-             pass
+            if chassis_sn not in contract_sn:
+                self.failed(f'{chassis_sn} is not covered by contract')
+            else:
+                pass
 
-       elif device.os == 'nxos':
+        elif device.os == 'nxos':
 
-         out3 = device.parse('show inventory')
-         chassis_sn = <<replace me>>
+            out3 = device.parse('show inventory')
+            chassis_sn = << replace me >>
 
-         if chassis_sn not in contract_sn:
-             self.failed(f'{chassis_sn} is not covered by contract')
-         else:
-             pass
+            if chassis_sn not in contract_sn:
+                self.failed(f'{chassis_sn} is not covered by contract')
+            else:
+                pass
 
-       elif device.os == 'asa':
+        elif device.os == 'asa':
 
-         out2 = device.parse('show inventory')
-         chassis_sn = <<replace me>>
+            out2 = device.parse('show inventory')
+            chassis_sn = << replace me >>
 
-         if chassis_sn not in contract_sn:
-             self.failed(f'{chassis_sn} is not covered by contract')
-         else:
-             pass
+            if chassis_sn not in contract_sn:
+                self.failed(f'{chassis_sn} is not covered by contract')
+            else:
+                pass
 
 
-if __name__ == '__main__': # pragma: no cover
+if __name__ == '__main__':  # pragma: no cover
 
     import argparse
     from pyats.topology import loader
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest = 'testbed',
-                        type = loader.load)
+    parser.add_argument('--testbed', dest='testbed',
+                        type=loader.load)
 
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
-

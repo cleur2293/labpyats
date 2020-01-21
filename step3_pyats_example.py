@@ -9,16 +9,19 @@ from pyats.log.utils import banner
 # Genie Imports
 from genie.conf import Genie
 
+# To handle erorrs in connections
+from unicon.core import errors
+
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
-golden_routes = ['192.168.0.3/32','192.168.0.1/32']
+golden_routes = ['192.168.0.3/32', '192.168.0.1/32']
+
 
 class common_setup(aetest.CommonSetup):
 
-
     @aetest.subsection
-    def establish_connections(self,testbed):
+    def establish_connections(self, testbed):
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
@@ -27,7 +30,7 @@ class common_setup(aetest.CommonSetup):
                 "Connect to device '{d}'".format(d=device.name)))
             try:
                 device.connect()
-            except Exception as e:
+            except errors.ConnectionError:
                 self.failed("Failed to establish connection to '{}'".format(
                     device.name))
             device_list.append(device)
@@ -43,40 +46,39 @@ class Routing(aetest.Testcase):
         aetest.loop.mark(self.routes, device=devices)
 
     @aetest.test
-    def routes(self,device):
+    def routes(self, device):
 
-       if device.os == ('iosxe' or 'nxos'):
+        if device.os == ('iosxe' or 'nxos'):
 
-         output = device.learn('routing')
-         rib = <<replace me>>
+            output = device.learn('routing')
+            rib = << replace me >>
 
-         for route in golden_routes:
-           if route not in rib:
-             self.failed(f'{route} is not found')
-           else:
-             pass
+            for route in golden_routes:
+                if route not in rib:
+                    self.failed(f'{route} is not found')
+                else:
+                    pass
 
-       elif device.os == 'asa':
-         output = device.parse('show route')
-         rib = output['vrf']['default']['address_family']['ipv4']['routes']
+        elif device.os == 'asa':
+            output = device.parse('show route')
+            rib = output['vrf']['default']['address_family']['ipv4']['routes']
 
-         for route in golden_routes:
-           if route not in rib:
-             self.failed(f'{route} is not found')
-           else:
-             pass
+            for route in golden_routes:
+                if route not in rib:
+                    self.failed(f'{route} is not found')
+                else:
+                    pass
 
 
-if __name__ == '__main__': # pragma: no cover
+if __name__ == '__main__':  # pragma: no cover
 
     import argparse
     from pyats.topology import loader
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest = 'testbed',
-                        type = loader.load)
+    parser.add_argument('--testbed', dest='testbed',
+                        type=loader.load)
 
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
-
