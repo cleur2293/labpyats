@@ -17,6 +17,7 @@ def create_non_existing_dir(dir_path):
             log.error(f'Unable to create directory: {dir_path}. Insufficient privileges. Error: {e}')
             exit(1)
 
+
 def write_commands_to_file(abs_filename, command_output):
     try:
         with open(abs_filename, "w") as file_output:
@@ -24,10 +25,6 @@ def write_commands_to_file(abs_filename, command_output):
 
     except IOError as e:
         log.error(f'Unable to write output to file: {abs_filename}. Due to error: {e}')
-        exit(1)
-
-    except PermissionError as e:
-        log.error(f'Unable to write output to file: {abs_filename}. Insufficient privileges. Error: {e}')
         exit(1)
 
 
@@ -38,7 +35,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 
     for device_name, device in testbed.devices.items():
 
-        device_os = device.os #  get operating system of a device from pyats_testbed.yaml
+        device_os = device.os  # get operating system of a device from pyats_testbed.yaml
         device_path = path.join(abs_dir_path, device_name)
         create_non_existing_dir(device_path)
 
@@ -61,7 +58,8 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 
                 write_commands_to_file(abs_filename, command_output)
         else:
-            log.error(f'No commands for operating system: {device_os} of device: {device_name} has been defined. This device has been skipped. Specify list of commands for {device_os} and try again.')
+            log.error(f'No commands for operating system: {device_os} of device: {device_name} has been defined. '
+                      f'This device has been skipped. Specify list of commands for {device_os} and try again.')
             continue
 
 
@@ -74,11 +72,12 @@ def main():
     testbed = Genie.init(testbed_filename)
 
     commands_to_gather = {
-            'asa': ['show inventory', 'show running-config', 'show route', 'show ospf neighbor', 'show license all'],
-            'iosxe': ['show inventory', 'show running-config', 'show ip route vrf *', 'show ip ospf neighbor',
-                           'show license feature'],
-        'nxos': ['show inventory', 'show running-config', 'show ip route vrf all', 'show ip ospf neighbor vrf all',
-                       'show license usage']}
+        'asa': ['show inventory', 'show running-config', 'show route',
+                'show ospf neighbor', 'show license all'],
+        'iosxe': ['show inventory', 'show running-config', 'show ip route vrf *',
+                  'show ip ospf neighbor', 'show license feature'],
+        'nxos': ['show inventory', 'show running-config', 'show ip route vrf all',
+                 'show ip ospf neighbor vrf all', 'show license usage']}
 
     dir_name = 'gathered_commands'
 
@@ -87,5 +86,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
