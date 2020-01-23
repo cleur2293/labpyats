@@ -4,6 +4,11 @@
 import logging
 import re
 
+# To filter management networks from ping testcases
+from ipaddress import IPv4Network
+from ipaddress import IPv4Address
+
+
 from pyats import aetest
 from pyats.log.utils import banner
 
@@ -16,6 +21,9 @@ from unicon.core import errors
 # Get your logger for your script
 log = logging.getLogger(__name__)
 log.level = logging.INFO
+
+# Management network IP range
+mgmt_net = IPv4Network('198.18.1.0/24')
 
 class MyCommonSetup(aetest.CommonSetup):
     """
@@ -43,7 +51,6 @@ class MyCommonSetup(aetest.CommonSetup):
                 self.failed("Failed to establish connection to '{}'".format(
                     device.name))
             device_list.append(device)
-
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
 
@@ -63,7 +70,7 @@ class PingTestcase(aetest.Testcase):
         """
 
         # list to store all IPs from topology
-        dest_ips = []  
+        dest_ips = []
 
         nx = self.parent.parameters['testbed'].devices['nx-osv-1']
         csr = self.parent.parameters['testbed'].devices['csr1000v-1']
@@ -76,7 +83,11 @@ class PingTestcase(aetest.Testcase):
 
             for iface in links.interfaces:
                 # process each interface (side) of the link and extract IP address from it
-                if iface.ipv4 is not None:
+
+                dest_ip = IPv4Address(iface.ipv4)
+                
+                # Check that destination IP is not from management IP range
+                if dest_ip not in mgmt_net:
                     log.info(f'{iface.name}:{iface.ipv4.ip}')
                     dest_ips.append(iface.ipv4.ip)
                 else:
@@ -110,11 +121,9 @@ class PingTestcase(aetest.Testcase):
 
         try:
             result = nx.ping(dest_ip)
-        except errors.ConnectionError:
-            # If we get exception during ping, then fail test
+        except Exception as e:
             self.failed(f'Ping from {nx.name}->{dest_ip} failed: {e}')
         else:
-            # Extract packet loss percentage
             m = re.search(r"(?P<rate>\d+)\.\d+% packet loss", result)
             loss_rate = m.group('rate')
 
@@ -124,7 +133,7 @@ class PingTestcase(aetest.Testcase):
                 self.failed('Ping loss rate {loss_rate}%')
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
 
     import argparse
     from pyats.topology import loader
