@@ -84,7 +84,7 @@ class PingTestcase(aetest.Testcase):
             for iface in links.interfaces:
                 # process each interface (side) of the link and extract IP address from it
 
-                dest_ip = IPv4Address(iface.ipv4)
+                dest_ip = IPv4Address(iface.ipv4.ip)
                 
                 # Check that destination IP is not from management IP range
                 if dest_ip not in mgmt_net:
