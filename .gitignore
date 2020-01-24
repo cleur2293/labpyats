@@ -9,3 +9,9 @@ pyats_testbed.yaml
 
 # Ignore idea folder from PyCharm
 .idea/
+
+# Ignore virlutils folder
+.virl/default
+
+# Ignore testbed generated
+pyats_tesbed.yaml
