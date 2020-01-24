@@ -60,7 +60,7 @@ class VerifyLogging(aetest.Testcase):
         """
 
         devices = self.parent.parameters['dev']
-        aetest.loop.mark(self.logging, device=devices)
+        aetest.loop.mark(self.error_logs, device=devices)
 
     @aetest.test
     def error_logs(self, device):
