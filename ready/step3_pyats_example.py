@@ -70,7 +70,7 @@ class Routing(aetest.Testcase):
         Verify that all device have golden_routes installed in RIB
         """
 
-        if device.os == ('iosxe' or 'nxos'):
+        if (device.os == 'iosxe') or (device.os == 'nxos'):
 
             output = device.learn('routing')
             rib = output.info['vrf']['default']['address_family']['ipv4']['routes']
