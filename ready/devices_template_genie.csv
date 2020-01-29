@@ -1,0 +1,4 @@
+hostname,ip,username,password,protocol,os
+asav-1, virl.demo.dcloud.cisco.com:17000,cisco,cisco,telnet,asa
+csr1000v-1, virl.demo.dcloud.cisco.com:17001,cisco,cisco,telnet,iosxe
+nx-osv-1, virl.demo.dcloud.cisco.com:17004,cisco,cisco,telnet,nxos
