@@ -1,0 +1,11 @@
+Hardware:   ASAv
+Cisco Adaptive Security Appliance Software Version 9.9(2)
+ASLR enabled, text region 7fc30be07000-7fc310277ed4
+PC         Thread       5Sec     1Min     5Min   Process
+   -          -         0.7%     0.8%     0.9%   DATAPATH-0-1681
+0x00007fc30c8c4d32   0x00007fc306b1df40     0.2%     0.2%     0.2%   CTM message handler
+0x00007fc30cc53ee9   0x00007fc306b15cc0     0.2%     0.1%     0.0%   CP Processing
+0x00007fc30dd8e26a   0x00007fc306b134e0     0.1%     0.1%     0.1%   update_cpu_usage
+0x00007fc30e5db0d8   0x00007fc306b086e0     0.1%     0.1%     0.1%   vpnfol_thread_unsent
+0x00007fc30dd23cec   0x00007fc306b19a60     0.0%     0.2%     0.0%   pm_timer_thread
+0x00007fc30dcb4d71   0x00007fc306b13fc0     0.0%     1.5%     1.2%   ci/console
