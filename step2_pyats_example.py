@@ -15,7 +15,7 @@ from unicon.core import errors
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
-contract_sn = ['923C9IN3KU1', '93NA29NSARX', '9AHA4AWEDBR']
+contract_sn = ['9L4HMKRV8NX', '9AH4C9TU2WP', '9JBG172PCVG']
 
 
 class MyCommonSetup(aetest.CommonSetup):
@@ -84,7 +84,7 @@ class Inventory(aetest.Testcase):
         elif device.os == 'nxos':
 
             out3 = device.parse('show inventory')
-            chassis_sn = << replace me >>
+            chassis_sn = out3['name']['Chassis']['serial_number']
 
             if chassis_sn not in contract_sn:
                 self.failed(f'{chassis_sn} is not covered by contract')
@@ -94,7 +94,7 @@ class Inventory(aetest.Testcase):
         elif device.os == 'asa':
 
             out2 = device.parse('show inventory')
-            chassis_sn = << replace me >>
+            chassis_sn = out2['Chassis']['sn']
 
             if chassis_sn not in contract_sn:
                 self.failed(f'{chassis_sn} is not covered by contract')

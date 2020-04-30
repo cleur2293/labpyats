@@ -16,6 +16,8 @@ from unicon.core import errors
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
+import argparse
+from pyats.topology import loader
 
 class common_setup(aetest.CommonSetup):
 
@@ -40,9 +42,6 @@ class common_setup(aetest.CommonSetup):
 
 
 if __name__ == '__main__':
-    import argparse
-    from pyats.topology import loader
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)
@@ -50,3 +49,5 @@ if __name__ == '__main__':
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
+
+

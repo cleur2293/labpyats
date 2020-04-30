@@ -36,8 +36,8 @@ parsergen.extend(show_cmds=show_cmds, regex_ext=regex, regex_tags=regex_tags)
 
 #attrValPairsToParse = [('cpu.process', 'vpnfol_thread_unsent')]
 # attrValPairsToParse = [('cpu.process', 'pm_timer_thread')]
-# attrValPairsToParse = [('cpu.process', 'ARP Thread')]
-attrValPairsToParse = [('cpu.process', 'DATAPATH-0-1681')]
+attrValPairsToParse = [('cpu.process', 'ARP Thread')]
+# attrValPairsToParse = [('cpu.process', 'DATAPATH-0-1681')]
 
 pgfill = parsergen.oper_fill(
     asa, 'show_cpu_sorted', attrvalpairs = attrValPairsToParse,

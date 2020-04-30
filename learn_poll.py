@@ -15,8 +15,7 @@ nxos.connectionmgr.log.setLevel(logging.ERROR)
 
 # Verify that interface is in up state
 def verify_interface_status(obj):
-            if obj.info['Ethernet1/4'].get('oper_status', None) and\
-               obj.info['Ethernet1/4']['oper_status'] == 'up':
+            if obj.info['Ethernet1/4']['oper_status'] == 'up':
              
                # Interface is up. Exit without exception
                print('+Eth1/4 is UP!!!!')

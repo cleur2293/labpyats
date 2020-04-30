@@ -12,6 +12,8 @@ from genie.conf import Genie
 # To handel errors with connections to devices
 from unicon.core import errors
 
+from pprint import pprint
+
 # Get your logger for your script
 log = logging.getLogger(__name__)
 
@@ -68,7 +70,7 @@ class VerifyASAHealth(aetest.Testcase):
             self.all_asa_info[dev.name] = asahealth.info
 
         log.info(self.all_asa_info)
-
+        # pprint(self.all_asa_info)
 
 if __name__ == '__main__':
     import argparse
