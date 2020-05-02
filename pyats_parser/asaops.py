@@ -43,7 +43,7 @@ class ShowCounters(ShowCountersSchema):
 
         header = ['Protocol', 'Counter', 'Value', 'Context']
 
-        result = parsergen.oper_fill_tabular(device_output=output, device_os='asa', header_fields=header, index=[0, 1])
+        result = parsergen.oper_fill_tabular(device_output=output, device_os='asa', header_fields=header, index=[1, 0])
         pprint(result.entries)
         return result.entries
 
@@ -54,8 +54,8 @@ class HealthASA(Base):
     def learn(self, custom=None):
 
         # Capture output from show counters parser
-        src = '[(?P<protocol_name>.*)][(?P<counter_name>.*)]'
-        dest = 'info[(?P<protocol_name>.*)][(?P<counter_name>.*)]'
+        src = '[(?P<counter_name>.*)][(?P<protocol_name>.*)]'
+        dest = 'info[(?P<counter_name>.*)][(?P<protocol_name>.*)]'
         req_keys = ['Value']
         for key in req_keys:
             self.add_leaf(cmd=ShowCounters,

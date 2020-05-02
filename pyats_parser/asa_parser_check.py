@@ -18,7 +18,7 @@ print(f'command output: \n{show_counters}')
 
 header = ['Protocol', 'Counter', 'Value', 'Context']
 
-result = parsergen.oper_fill_tabular(device_output=show_counters, device_os='asa', header_fields=header, index=[0, 1])
+result = parsergen.oper_fill_tabular(device_output=show_counters, device_os='asa', header_fields=header, index=[1, 0])
 
 print('result:')
 pprint(result.entries)

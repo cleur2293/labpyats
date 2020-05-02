@@ -40,7 +40,7 @@ class ShowCounters(ShowCountersSchema):
 
         header = ['Protocol', 'Counter', 'Value', 'Context']
 
-        result = parsergen.oper_fill_tabular(device_output=output, device_os='asa', header_fields=header, index=[1])
+        result = parsergen.oper_fill_tabular(device_output=output, device_os='asa', header_fields=header, index=[1, 0])
 
         return result.entries
 
@@ -63,7 +63,7 @@ class HealthASA(Base):
         self.make()
 
 
-testbed = Genie.init('dr/pyats_testbed.yaml')
+testbed = Genie.init('pyats_testbed.yaml')
 asa = testbed.devices['asav-1']
 asa.connect()
 
