@@ -15,3 +15,7 @@ pyats_testbed.yaml
 
 # Ignore testbed generated
 pyats_tesbed.yaml
+
+# Ignore Notebook checkpoints
+.ipynb_checkpoints
+*.ipynb

@@ -14,11 +14,14 @@ from unicon.core import errors
 
 from pprint import pprint
 
+import argparse
+from pyats.topology import loader
+
+# Import custom class for PyATS learn ('show counters')
+from asaops import HealthASA
+
 # Get your logger for your script
 log = logging.getLogger(__name__)
-
-
-from asaops import HealthASA
 
 class MyCommonSetup(aetest.CommonSetup):
     """
@@ -72,9 +75,6 @@ class VerifyASAHealth(aetest.Testcase):
         log.info(f'\n\nResult of ASA health check:\n{self.all_asa_info}\n\n\n')
 
 if __name__ == '__main__':
-    import argparse
-    from pyats.topology import loader
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)
@@ -82,4 +82,5 @@ if __name__ == '__main__':
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
+
 
