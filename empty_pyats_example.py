@@ -14,7 +14,9 @@ from genie.conf import Genie
 from unicon.core import errors
 
 # Get your logger for your script
+global log
 log = logging.getLogger(__name__)
+log.level = logging.INFO
 
 import argparse
 from pyats.topology import loader
@@ -29,13 +31,11 @@ class common_setup(aetest.CommonSetup):
         device_list = []
         # Load all devices from testbed file and try to connect to them
         for device in genie_testbed.devices.values():
-            log.info(banner(
-                "Connect to device '{d}'".format(d=device.name)))
+            log.info(banner(f"Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{}'".format(
-                    device.name))
+                self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
