@@ -56,7 +56,7 @@ class MyCommonSetup(aetest.CommonSetup):
 
 class VerifyASAHealth(aetest.Testcase):
     """
-    VerifyASAHealth- collect telemetry information from ASA devices
+    VerifyASAHealth - collect telemetry information from ASA devices
     Verify that all devices  behaving correctly
     """
 
