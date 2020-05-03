@@ -125,3 +125,4 @@ alias jupyter-notebook="~/.local/bin/jupyter-notebook --no-browser"
 source /home/cisco/pyats/bin/activate
 
 ~/.rungit.py ~/labpyats
+~/.runvirl.py
