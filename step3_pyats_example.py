@@ -42,11 +42,11 @@ class MyCommonSetup(aetest.CommonSetup):
         device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
-                "Connect to device '{device.name}'"))
+                f"Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)

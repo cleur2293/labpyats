@@ -48,11 +48,11 @@ class MyCommonSetup(aetest.CommonSetup):
         device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
-                "Connect to device '{device.name}'"))
+                f"Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -79,22 +79,22 @@ class PingTestcase(aetest.Testcase):
         csr = self.parent.parameters['testbed'].devices['csr1000v-1']
 
         # Find links between NX-OS device and CSR1000v
-        dest_links = nx.find_links(csr)
+        links = nx.find_links(csr)
 
-        for links in dest_links:
+        for link in links:
             # process each link between devices
 
-            for iface in links.interfaces:
+            for link_iface in link.interfaces:
                 # process each interface (side) of the link and extract IP address from it
 
-                dest_ip = IPv4Address(iface.ipv4.ip)
+                dest_ip = IPv4Address(link_iface.ipv4.ip)
 
                 # Check that destination IP is not from management IP range
                 if dest_ip not in mgmt_net:
-                    log.info(f'{iface.name}:{iface.ipv4.ip}')
-                    dest_ips.append(iface.ipv4.ip)
+                    log.info(f'{link_iface.name}:{link_iface.ipv4.ip}')
+                    dest_ips.append(link_iface.ipv4.ip)
                 else:
-                    log.info(f'Skipping iface {iface.name} without IPv4 address')
+                    log.info(f'Skipping link_iface {link_iface.name} without IPv4 address')
 
         log.info(f'Collected following IP addresses: {dest_ips}')
 
@@ -133,7 +133,7 @@ class PingTestcase(aetest.Testcase):
             if int(loss_rate) < 20:
                 self.passed(f'Ping loss rate {loss_rate}%')
             else:
-                self.failed('Ping loss rate {loss_rate}%')
+                self.failed(f'Ping loss rate {loss_rate}%')
 
 
 if __name__ == '__main__':  # pragma: no cover
