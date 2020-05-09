@@ -12,9 +12,13 @@ from genie.conf import Genie
 # To handel errors with connections to devices
 from unicon.core import errors
 
-# Get your logger for your script
-log = logging.getLogger(__name__)
+import argparse
+from pyats.topology import loader
 
+# Get your logger for your script
+global log
+log = logging.getLogger(__name__)
+log.level = logging.INFO
 
 class MyCommonSetup(aetest.CommonSetup):
     """
@@ -35,12 +39,11 @@ class MyCommonSetup(aetest.CommonSetup):
         device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
-                "Connect to device '{d}'".format(d=device.name)))
+                f"Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{}'".format(
-                    device.name))
+                self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -51,19 +54,22 @@ class VerifyLogging(aetest.Testcase):
     VerifyLogging Testcase - collect show logging information from devices
     Verify that all devices do not have 'ERROR|WARN' messages in logs
     """
-    
+
     @aetest.setup
     def setup(self):
-        pass
+        devices = self.parent.parameters['dev']
+        aetest.loop.mark(self.error_logs, device=devices)
 
     @aetest.test
-    def error_logs(self):
+    def error_logs(self,device):
+       output = device.execute('show logging | i ERROR|WARN')
 
+       if len(output) > 0:
+         self.failed('Found ERROR in log, review logs first')
+       else:
+         pass
 
 if __name__ == '__main__':
-    import argparse
-    from pyats.topology import loader
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)

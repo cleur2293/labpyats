@@ -18,7 +18,11 @@ from genie.conf import Genie
 # To handel errors with connections to devices
 from unicon.core import errors
 
+import argparse
+from pyats.topology import loader
+
 # Get your logger for your script
+global log
 log = logging.getLogger(__name__)
 log.level = logging.INFO
 
@@ -44,12 +48,11 @@ class MyCommonSetup(aetest.CommonSetup):
         device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
-                "Connect to device '{d}'".format(d=device.name)))
+                "Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{}'".format(
-                    device.name))
+                self.failed("Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -85,7 +88,7 @@ class PingTestcase(aetest.Testcase):
                 # process each interface (side) of the link and extract IP address from it
 
                 dest_ip = IPv4Address(iface.ipv4.ip)
-                
+
                 # Check that destination IP is not from management IP range
                 if dest_ip not in mgmt_net:
                     log.info(f'{iface.name}:{iface.ipv4.ip}')
@@ -134,10 +137,6 @@ class PingTestcase(aetest.Testcase):
 
 
 if __name__ == '__main__':  # pragma: no cover
-
-    import argparse
-    from pyats.topology import loader
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)

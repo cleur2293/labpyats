@@ -12,8 +12,13 @@ from genie.conf import Genie
 # To handle erorrs in connections
 from unicon.core import errors
 
+import argparse
+from pyats.topology import loader
+
 # Get your logger for your script
+global log
 log = logging.getLogger(__name__)
+log.level = logging.INFO
 
 golden_routes = ['192.168.0.3/32', '192.168.0.1/32']
 
@@ -37,12 +42,11 @@ class MyCommonSetup(aetest.CommonSetup):
         device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
-                "Connect to device '{d}'".format(d=device.name)))
+                "Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{}'".format(
-                    device.name))
+                self.failed("Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -53,14 +57,14 @@ class Routing(aetest.Testcase):
     Routing Testcase - extract routing information from devices
     Verify that all device have golden_routes installed in RIB
     """
-    
+
     @aetest.setup
     def setup(self):
         """
         Get list of all devices in testbed and run routes testcase for each device
         :return:
         """
-        
+
         devices = self.parent.parameters['dev']
         aetest.loop.mark(self.routes, device=devices)
 
@@ -69,11 +73,11 @@ class Routing(aetest.Testcase):
         """
         Verify that all device have golden_routes installed in RIB
         """
-        
+
         if (device.os == 'iosxe') or (device.os == 'nxos'):
 
             output = device.learn('routing')
-            rib = << replace me >>
+            rib = <<replace me>>
 
             for route in golden_routes:
                 if route not in rib:
@@ -93,10 +97,6 @@ class Routing(aetest.Testcase):
 
 
 if __name__ == '__main__':  # pragma: no cover
-
-    import argparse
-    from pyats.topology import loader
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)

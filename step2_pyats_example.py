@@ -12,10 +12,15 @@ from genie.conf import Genie
 # To handel errors with connections to devices
 from unicon.core import errors
 
-# Get your logger for your script
-log = logging.getLogger(__name__)
+import argparse
+from pyats.topology import loader
 
-contract_sn = ['9L4HMKRV8NX', '9AH4C9TU2WP', '9JBG172PCVG']
+# Get your logger for your script
+global log
+log = logging.getLogger(__name__)
+log.level = logging.INFO
+
+contract_sn = ['9A1CAATT123', '9K5GXY64123', '9QVJ3743123'] # <- SNs that has to be changed to the actual
 
 
 class MyCommonSetup(aetest.CommonSetup):
@@ -36,13 +41,11 @@ class MyCommonSetup(aetest.CommonSetup):
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
         for device in genie_testbed.devices.values():
-            log.info(banner(
-                "Connect to device '{d}'".format(d=device.name)))
+            log.info(banner(f"Connect to device '{device.name}'"))
             try:
                 device.connect()
             except errors.ConnectionError:
-                self.failed("Failed to establish connection to '{}'".format(
-                    device.name))
+                self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -53,14 +56,14 @@ class Inventory(aetest.Testcase):
     Inventory Testcase - extract Serial numbers information from devices
     Verify that all SNs are covered by service contract (exist in contract_sn)
     """
-    
+
     @aetest.setup
     def setup(self):
         """
         Get list of all devices in testbed and run inventory testcase for each device
         :return:
         """
-        
+
         devices = self.parent.parameters['dev']
         aetest.loop.mark(self.inventory, device=devices)
 
@@ -70,7 +73,7 @@ class Inventory(aetest.Testcase):
         Verify that all SNs are covered by service contract (exist in contract_sn)
         :return:
         """
-        
+
         if device.os == 'iosxe':
 
             out1 = device.parse('show inventory')
@@ -83,8 +86,8 @@ class Inventory(aetest.Testcase):
 
         elif device.os == 'nxos':
 
-            out3 = device.parse('show inventory')
-            chassis_sn = out3['name']['Chassis']['serial_number']
+            out2 = device.parse('show inventory')
+            chassis_sn = out2['name']['Chassis']['serial_number']
 
             if chassis_sn not in contract_sn:
                 self.failed(f'{chassis_sn} is not covered by contract')
@@ -93,8 +96,8 @@ class Inventory(aetest.Testcase):
 
         elif device.os == 'asa':
 
-            out2 = device.parse('show inventory')
-            chassis_sn = out2['Chassis']['sn']
+            out3 = device.parse('show inventory')
+            chassis_sn = out3['Chassis']['sn']
 
             if chassis_sn not in contract_sn:
                 self.failed(f'{chassis_sn} is not covered by contract')
@@ -102,11 +105,7 @@ class Inventory(aetest.Testcase):
                 pass
 
 
-if __name__ == '__main__':  # pragma: no cover
-
-    import argparse
-    from pyats.topology import loader
-
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--testbed', dest='testbed',
                         type=loader.load)
