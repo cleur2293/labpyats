@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python3
 
 # To get a logger for the script
 import logging
@@ -6,8 +6,6 @@ import re
 
 # To filter management networks from ping testcases
 from ipaddress import IPv4Network
-from ipaddress import IPv4Address
-
 
 from pyats import aetest
 from pyats.log.utils import banner
@@ -87,14 +85,14 @@ class PingTestcase(aetest.Testcase):
             for link_iface in link.interfaces:
                 # process each interface (side) of the link and extract IP address from it
 
-                dest_ip = IPv4Address(link_iface.ipv4.ip)
+                dest_ip = link_iface.ipv4.ip
 
                 # Check that destination IP is not from management IP range
                 if dest_ip not in mgmt_net:
                     log.info(f'{link_iface.name}:{link_iface.ipv4.ip}')
                     dest_ips.append(link_iface.ipv4.ip)
                 else:
-                    log.info(f'Skipping link_iface {link_iface.name} without IPv4 address')
+                    log.info(f'Skipping link_iface {link_iface.name} from management subnet')
 
         log.info(f'Collected following IP addresses: {dest_ips}')
 
