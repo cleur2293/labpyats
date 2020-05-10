@@ -68,7 +68,7 @@ def main():
     log = logging.getLogger(__name__)
     log.level = logging.INFO
 
-    testbed_filename = './pyats_testbed.yaml'
+    testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
     testbed = Genie.init(testbed_filename)
 
     commands_to_gather = {

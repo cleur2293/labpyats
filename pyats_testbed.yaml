@@ -1,13 +1,15 @@
 testbed:
 
   name: labpyats_default_wExpSL
-
-  tacacs:
-    username: "%ENV{PYATS_USERNAME}"
-  passwords:
-    tacacs: "%ENV{PYATS_PASSWORD}"
-    enable: "%ENV{PYATS_AUTH_PASS}"
-    line: "%ENV{PYATS_PASSWORD}"
+  
+  credentials:
+    default:
+      username: "%ENV{PYATS_USERNAME}"
+      password: "%ENV{PYATS_PASSWORD}"
+    enable:
+      password: "%ENV{PYATS_AUTH_PASS}"
+    line:
+      password: "%ENV{PYATS_AUTH_PASS}"
   servers:
     jumphost:
       address: 198.18.1.100
