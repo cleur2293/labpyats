@@ -52,7 +52,9 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 
         if commands_to_gather.get(device_os):
             for command in commands_to_gather[device_os]:
-                filename = device_name + '_' + command
+                filename_command = command.replace(' ', '_')
+                filename_command = filename_command.replace('*', 'all')
+                filename = device_name + '_' + filename_command
                 abs_filename = path.join(device_path, filename)
                 log.info(f'filename = {abs_filename}')
 
