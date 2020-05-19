@@ -35,7 +35,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
     abs_dir_path = path.join(path.dirname(__file__), dir_name)
 
     create_non_existing_dir(abs_dir_path)
-    
+
     log.info('Starting to collect output of the commands')
 
     for device_name, device in testbed.devices.items():
@@ -59,7 +59,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
                 filename_command = filename_command.replace('*', 'all')
                 filename = device_name + '_' + filename_command
                 abs_filename = path.join(device_path, filename)
-                log.info(f'filename = {abs_filename}')
+                log.info(f'filename: {abs_filename}')
 
                 command_output = device.execute(command, log_stdout = True)
 
@@ -72,8 +72,8 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 
 def main():
     global log
-    log = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
+    log = logging.getLogger(__name__)
 
     testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
     testbed = Genie.init(testbed_filename)

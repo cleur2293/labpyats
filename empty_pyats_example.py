@@ -22,7 +22,6 @@ import argparse
 from pyats.topology import loader
 
 class common_setup(aetest.CommonSetup):
-
     @aetest.subsection
     def establish_connections(self, testbed):
         # Load testbed file which is passed as command-line argument
@@ -33,7 +32,7 @@ class common_setup(aetest.CommonSetup):
         for device in genie_testbed.devices.values():
             log.info(banner(f"Connect to device '{device.name}'"))
             try:
-                device.connect()
+                device.connect(log_stdout = False)
             except errors.ConnectionError:
                 self.failed(f"Failed to establish connection to '{device.name}'")
             device_list.append(device)
