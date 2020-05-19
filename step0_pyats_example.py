@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import random
 
 import logging
 
@@ -34,6 +35,8 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
     abs_dir_path = path.join(path.dirname(__file__), dir_name)
 
     create_non_existing_dir(abs_dir_path)
+    
+    log.info('Starting to collect output of the commands')
 
     for device_name, device in testbed.devices.items():
 
@@ -42,7 +45,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
         create_non_existing_dir(device_path)
 
         try:
-            device.connect()
+            device.connect(log_stdout = False)
         except errors.ConnectionError:
             log.error(f'Failed to establish connection to: {device.name}. Check connectivity and try again.')
             continue
@@ -58,7 +61,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
                 abs_filename = path.join(device_path, filename)
                 log.info(f'filename = {abs_filename}')
 
-                command_output = device.execute(command)
+                command_output = device.execute(command, log_stdout = True)
 
                 write_commands_to_file(abs_filename, command_output)
         else:
@@ -70,7 +73,7 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 def main():
     global log
     log = logging.getLogger(__name__)
-    log.level = logging.INFO
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
 
     testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
     testbed = Genie.init(testbed_filename)
