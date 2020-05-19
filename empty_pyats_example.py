@@ -13,18 +13,27 @@ from genie.conf import Genie
 # To handel errors with connections to devices
 from unicon.core import errors
 
+import argparse
+from pyats.topology import loader
+
 # Get your logger for your script
 global log
 log = logging.getLogger(__name__)
-log.level = logging.INFO
+log.setLevel(logging.INFO)
 
-import argparse
-from pyats.topology import loader
+formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(formatter)
+consoleHandler.setLevel(logging.ERROR)
+
+log.addHandler(consoleHandler)
 
 class common_setup(aetest.CommonSetup):
     @aetest.subsection
     def establish_connections(self, testbed):
         # Load testbed file which is passed as command-line argument
+        log.error(f'Test error message')
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
