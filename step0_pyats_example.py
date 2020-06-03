@@ -50,9 +50,6 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
             log.error(f'Failed to establish connection to: {device.name}. Check connectivity and try again.')
             continue
 
-        device.connectionmgr.log.setLevel(logging.ERROR)
-        device.log_user(enable=True)
-
         if commands_to_gather.get(device_os):
             for command in commands_to_gather[device_os]:
                 filename_command = command.replace(' ', '_')
@@ -73,6 +70,8 @@ def collect_device_commands(testbed, commands_to_gather, dir_name):
 def main():
     global log
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
+
+
     log = logging.getLogger(__name__)
 
     testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
