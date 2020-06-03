@@ -21,13 +21,6 @@ global log
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
-
-consoleHandler = logging.StreamHandler()
-consoleHandler.setFormatter(formatter)
-consoleHandler.setLevel(logging.ERROR)
-
-log.addHandler(consoleHandler)
 
 class common_setup(aetest.CommonSetup):
     @aetest.subsection
