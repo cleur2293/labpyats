@@ -26,7 +26,6 @@ class common_setup(aetest.CommonSetup):
     @aetest.subsection
     def establish_connections(self, testbed):
         # Load testbed file which is passed as command-line argument
-        log.error(f'Test error message')
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
         device_list = []
