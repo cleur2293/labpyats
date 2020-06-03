@@ -13,7 +13,7 @@ from pyats.log.utils import banner
 # Genie Imports
 from genie.conf import Genie
 
-# To handel errors with connections to devices
+# To handle errors with connections to devices
 from unicon.core import errors
 
 import argparse
