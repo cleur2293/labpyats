@@ -43,7 +43,6 @@ class MyCommonSetup(aetest.CommonSetup):
 
         genie_testbed = Genie.init(testbed)
         self.parent.parameters['testbed'] = genie_testbed
-        device_list = []
         for device in genie_testbed.devices.values():
             log.info(banner(
                 f"Connect to device '{device.name}'"))
@@ -51,9 +50,6 @@ class MyCommonSetup(aetest.CommonSetup):
                 device.connect(log_stdout = False)
             except errors.ConnectionError:
                 self.failed(f"Failed to establish connection to '{device.name}'")
-            device_list.append(device)
-        # Pass list of devices to testcases
-        self.parent.parameters.update(dev=device_list)
 
 
 class PingTestcase(aetest.Testcase):
