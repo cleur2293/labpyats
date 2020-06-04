@@ -1,6 +1,6 @@
 testbed:
 
-  name: labpyats_default_wExpSL
+  name: labpyats
   
   credentials:
     default:
@@ -28,8 +28,6 @@ devices:
 
     connections:
 
-      defaults:
-        class: unicon.Unicon
       console:
         protocol: telnet
         ip: 198.18.1.202
