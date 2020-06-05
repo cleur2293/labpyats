@@ -45,8 +45,10 @@ Basic Python knowledge is desirable:
 
 Attending Cisco Live, pay attention to the following<br></br>
 presentations and workshops about pyATS at DEVNET:
-- Network Assurance: pyATS/Genie for Network Engineers\ **DEVNET-1204**
-- DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners\ **DEVWKS-2808**
+- Network Assurance: pyATS/Genie for Network Engineers\
+**DEVNET-1204**
+- DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners\
+**DEVWKS-2808**
 - DevNet Workshop: Network Verification with pyATS/Genie for non-programmers\ **DEVWKS-2595**
 - DevNet Workshop: pyATS Intro - creating parsers with GENIE<br></br>\ **DEVWKS-2601**
 - DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements<br></br>\ **DEVWKS-1407**
