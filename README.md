@@ -1,9 +1,10 @@
 # Automated testing for your network - pyATS
 
-This repository contains files required for the participants of Cisco dCloud lab.
+This repository contains files required for the participants of Cisco dCloud lab.<br></br>
 This lab is based on Walked-in Self-paced Lab (WISP) LABOPS-1775 that was delivered at Cisco Live EU 2020:
+<br></br>
 ![alt text](https://pubhub.devnetcloud.com/media/pyats/docs/_images/logo.png)
-
+<br></br>
 ## Abstract
 
 Today automation of time-consuming network operations is not a trend but MUST for all network engineers.
