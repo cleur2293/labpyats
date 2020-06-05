@@ -33,9 +33,10 @@ class common_setup(aetest.CommonSetup):
         for device in genie_testbed.devices.values():
             log.info(banner(f"Connect to device '{device.name}'"))
             try:
-                device.connect(log_stdout = False)
+                device.connect(log_stdout=False)
             except errors.ConnectionError:
-                self.failed(f"Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -49,5 +50,3 @@ if __name__ == '__main__':
     args, unknown = parser.parse_known_args()
 
     aetest.main(**vars(args))
-
-

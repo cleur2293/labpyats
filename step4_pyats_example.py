@@ -27,6 +27,7 @@ log.level = logging.INFO
 # Management network IP range
 mgmt_net = IPv4Network('198.18.1.0/24')
 
+
 class MyCommonSetup(aetest.CommonSetup):
     """
     CommonSetup class to prepare for testcases
@@ -47,9 +48,10 @@ class MyCommonSetup(aetest.CommonSetup):
             log.info(banner(
                 f"Connect to device '{device.name}'"))
             try:
-                device.connect(log_stdout = False)
+                device.connect(log_stdout=False)
             except errors.ConnectionError:
-                self.failed(f"Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
 
 
 class PingTestcase(aetest.Testcase):
@@ -79,7 +81,8 @@ class PingTestcase(aetest.Testcase):
             # process each link between devices
 
             for link_iface in link.interfaces:
-                # process each interface (side) of the link and extract IP address from it
+                # process each interface (side) of the
+                # link and extract IP address from it
 
                 dest_ip = link_iface.ipv4.ip
 
@@ -88,7 +91,8 @@ class PingTestcase(aetest.Testcase):
                     log.info(f'{link_iface.name}:{link_iface.ipv4.ip}')
                     dest_ips.append(link_iface.ipv4.ip)
                 else:
-                    log.info(f'Skipping link_iface {link_iface.name} from management subnet')
+                    log.info(f'Skipping link_iface {link_iface.name} '
+                             f'from management subnet')
 
         log.info(f'Collected following IP addresses: {dest_ips}')
 

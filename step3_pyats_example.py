@@ -44,9 +44,10 @@ class MyCommonSetup(aetest.CommonSetup):
             log.info(banner(
                 f"Connect to device '{device.name}'"))
             try:
-                device.connect(log_stdout = False)
+                device.connect(log_stdout=False)
             except errors.ConnectionError:
-                self.failed(f"Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -61,7 +62,8 @@ class Routing(aetest.Testcase):
     @aetest.setup
     def setup(self):
         """
-        Get list of all devices in testbed and run routes testcase for each device
+        Get list of all devices in testbed and
+        run routes testcase for each device
         :return:
         """
 

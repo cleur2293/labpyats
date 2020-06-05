@@ -20,7 +20,8 @@ global log
 log = logging.getLogger(__name__)
 log.level = logging.INFO
 
-contract_sn = ['9A1CAATT123', '9K5GXY64123', '9QVJ3743123'] # <- SNs that has to be changed to the actual
+# SNs that has to be changed to the actual:
+contract_sn = ['9A1CAATT123', '9K5GXY64123', '9QVJ3743123']
 
 
 class MyCommonSetup(aetest.CommonSetup):
@@ -43,9 +44,10 @@ class MyCommonSetup(aetest.CommonSetup):
         for device in genie_testbed.devices.values():
             log.info(banner(f"Connect to device '{device.name}'"))
             try:
-                device.connect(log_stdout = False)
+                device.connect(log_stdout=False)
             except errors.ConnectionError:
-                self.failed(f"Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -60,7 +62,8 @@ class Inventory(aetest.Testcase):
     @aetest.setup
     def setup(self):
         """
-        Get list of all devices in testbed and run inventory testcase for each device
+        Get list of all devices in testbed and
+        run inventory testcase for each device
         :return:
         """
 
@@ -70,7 +73,8 @@ class Inventory(aetest.Testcase):
     @aetest.test
     def inventory(self, device):
         """
-        Verify that all SNs are covered by service contract (exist in contract_sn)
+        Verify that all SNs are covered by
+        service contract (exist in contract_sn)
         :return:
         """
 
