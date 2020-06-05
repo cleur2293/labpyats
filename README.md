@@ -16,7 +16,7 @@ Cisco released pyATS framework for test automation and a lot of our customers st
 This tool has great opportunities, but it is always hard to change the way that people get used to behave previous 20 years.
 
 This lab shows real examples from the field and gives a fast start for test automation in a network.
-
+<br></br>
 **During the lab participants will be able to**:
 - Learn pyATS capabilities.
 - Understand the structure of testbed file.
