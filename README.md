@@ -17,7 +17,7 @@ This tool has great opportunities, but it is always hard to change the way that 
 
 This lab shows real examples from the field and gives a fast start for test automation in a network.
 
-*During the lab participants will be able to*:
+**During the lab participants will be able to**:
 - Learn pyATS capabilities.
 - Understand the structure of testbed file.
 - Learn how to test the network before and after making a change.
