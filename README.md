@@ -4,7 +4,7 @@ This repository contains files required for the participants of Cisco dCloud lab
 This lab is based on Walked-in Self-paced Lab (WISP) LABOPS-1775 that was delivered at Cisco Live EU 2020:
 ![alt text](https://pubhub.devnetcloud.com/media/pyats/docs/_images/logo.png)
 
-##Abstract
+## Abstract
 ================================================
 Today automation of time-consuming network operations is not a trend but MUST for all network engineers.
 
@@ -25,22 +25,22 @@ This lab shows real examples from the field and gives a fast start for test auto
 As a result of the lab, the participant will build their automated tests, using pyATS frameworks.
 All participants will get access to lab source code to automate tests in their networks afterwards.
 
-##Technical Level
+## Technical Level
 ================
 Intermediate
 
-##Goal of the Session
+## Goal of the Session
 =========================================================
 Provide practical experience working with pyATS for automation of networks.
 Bring potential use-cases for pyATS in participant's network.
 
-##Recommended readings
+## Recommended readings
 =======================================================
 Basic Python knowledge is desirable:
 - Python: https://www.w3schools.com/python
 - pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
-##Related Sessions at Cisco Live
+## Related Sessions at Cisco Live
 =========================================================
 Attending Cisco Live, pay attention to the following<br></br>
 presentations and workshops about pyATS at DEVNET:
@@ -54,4 +54,3 @@ presentations and workshops about pyATS at DEVNET:
 	**DEVWKS-2601**
 5.	DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements
 	**DEVWKS-1407**
-
