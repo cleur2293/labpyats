@@ -49,6 +49,9 @@ presentations and workshops about pyATS at DEVNET:
 **DEVNET-1204**
 - DevNet Workshop: NetDevOps programming with pyATS/Genie for beginners\
 **DEVWKS-2808**
-- DevNet Workshop: Network Verification with pyATS/Genie for non-programmers\ **DEVWKS-2595**
-- DevNet Workshop: pyATS Intro - creating parsers with GENIE<br></br>\ **DEVWKS-2601**
-- DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements<br></br>\ **DEVWKS-1407**
+- DevNet Workshop: Network Verification with pyATS/Genie for non-programmers\
+**DEVWKS-2595**
+- DevNet Workshop: pyATS Intro - creating parsers with GENIE\
+**DEVWKS-2601**
+- DevNet Workshop: Utilizing Cisco CXTA service framework to validate network elements\
+**DEVWKS-1407**
