@@ -79,7 +79,7 @@ class Routing(aetest.Testcase):
         if (device.os == 'iosxe') or (device.os == 'nxos'):
 
             output = device.learn('routing')
-            rib = <<replace me>>
+            rib = <<replace me>>  # noqa: E999
 
             for route in golden_routes:
                 if route not in rib:
