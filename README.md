@@ -5,7 +5,7 @@ This lab is based on Walked-in Self-paced Lab (WISP) LABOPS-1775 that was delive
 ![alt text](https://pubhub.devnetcloud.com/media/pyats/docs/_images/logo.png)
 
 ## Abstract
-================================================
+===
 Today automation of time-consuming network operations is not a trend but MUST for all network engineers.
 
 This lab is prepared by Cisco CX engineers who see huge demand from Cisco customers for all automation topics, especially for automation of network testing.
@@ -26,22 +26,22 @@ As a result of the lab, the participant will build their automated tests, using 
 All participants will get access to lab source code to automate tests in their networks afterwards.
 
 ## Technical Level
-================
+===
 Intermediate
 
 ## Goal of the Session
-=========================================================
+===
 Provide practical experience working with pyATS for automation of networks.
 Bring potential use-cases for pyATS in participant's network.
 
 ## Recommended readings
-=======================================================
+===
 Basic Python knowledge is desirable:
 - Python: https://www.w3schools.com/python
 - pyATS documentation: https://pubhub.devnetcloud.com/media/pyats/docs/index.html
 
 ## Related Sessions at Cisco Live
-=========================================================
+===
 Attending Cisco Live, pay attention to the following<br></br>
 presentations and workshops about pyATS at DEVNET:
 1.	Network Assurance: pyATS/Genie for Network Engineers
