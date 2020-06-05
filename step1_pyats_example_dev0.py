@@ -20,6 +20,7 @@ global log
 log = logging.getLogger(__name__)
 log.level = logging.ERROR
 
+
 class MyCommonSetup(aetest.CommonSetup):
     """
     CommonSetup class to prepare for testcases
@@ -41,9 +42,10 @@ class MyCommonSetup(aetest.CommonSetup):
             log.info(banner(
                 f"Connect to device '{device.name}'"))
             try:
-                device.connect(log_stdout = False)
+                device.connect(log_stdout=False)
             except errors.ConnectionError:
-                self.failed(f"Failed to establish connection to '{device.name}'")
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
             device_list.append(device)
         # Pass list of devices to testcases
         self.parent.parameters.update(dev=device_list)
@@ -61,13 +63,13 @@ class VerifyLogging(aetest.Testcase):
 
     @aetest.test
     def error_logs(self):
-       any_device = self.parent.parameters['dev'][0]
-       output = any_device.execute('show logging | i ERROR|WARN')
+        any_device = self.parent.parameters['dev'][0]
+        output = any_device.execute('show logging | i ERROR|WARN')
 
-       if len(output) > 0:
-         self.failed('Found ERROR in log, review logs first')
-       else:
-         pass
+        if len(output) > 0:
+            self.failed('Found ERROR in log, review logs first')
+        else:
+            pass
 
 
 if __name__ == '__main__':
