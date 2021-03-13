@@ -85,7 +85,7 @@ def main():
                 'show ospf neighbor', 'show license all'],
         'iosxe': ['show inventory', 'show running-config',
                   'show ip route vrf *', 'show ip ospf neighbor',
-                  'show license feature'],
+                  'show license status'],
         'nxos': ['show inventory', 'show running-config',
                  'show ip route vrf all', 'show ip ospf neighbor vrf all',
                  'show license usage']}
