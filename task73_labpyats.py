@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 log.level = logging.INFO
 
 # SNs that has to be changed to the actual:
-contract_sn = ['9A1CAATT123', '9K5GXY64123', '9QVJ3743123']
+contract_sn = ['9AQHSSAS8AU', '9Q3YV06WJ71', '9IFUH4GPSGL']
 
 
 class MyCommonSetup(aetest.CommonSetup):
