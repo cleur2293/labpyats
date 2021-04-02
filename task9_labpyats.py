@@ -10,9 +10,6 @@ from ipaddress import IPv4Network
 from pyats import aetest
 from pyats.log.utils import banner
 
-# Genie Imports
-from genie.conf import Genie
-
 # To handle errors with connections to devices
 from unicon.core import errors
 
@@ -35,16 +32,15 @@ class MyCommonSetup(aetest.CommonSetup):
     """
 
     @aetest.subsection
-    def establish_connections(self, testbed):
+    def establish_connections(self, pyats_testbed):
         """
         Establishes connections to all devices in testbed
         :param testbed:
         :return:
         """
 
-        genie_testbed = Genie.init(testbed)
-        self.parent.parameters['testbed'] = genie_testbed
-        for device in genie_testbed.devices.values():
+        self.parent.parameters['testbed'] = pyats_testbed
+        for device in pyats_testbed.devices.values():
             log.info(banner(
                 f"Connect to device '{device.name}'"))
             try:
@@ -136,7 +132,7 @@ class PingTestcase(aetest.Testcase):
 
 if __name__ == '__main__':  # pragma: no cover
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest='testbed',
+    parser.add_argument('--testbed', dest='pyats_testbed',
                         type=loader.load)
 
     args, unknown = parser.parse_known_args()

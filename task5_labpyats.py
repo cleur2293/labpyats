@@ -7,9 +7,6 @@ import logging
 from pyats import aetest
 from pyats.log.utils import banner
 
-# Genie Imports
-from genie.conf import Genie
-
 # To handle errors with connections to devices
 from unicon.core import errors
 
@@ -24,13 +21,10 @@ log.setLevel(logging.INFO)
 
 class common_setup(aetest.CommonSetup):
     @aetest.subsection
-    def establish_connections(self, testbed):
-        # Load testbed file which is passed as command-line argument
-        genie_testbed = Genie.init(testbed)
-        self.parent.parameters['testbed'] = genie_testbed
+    def establish_connections(self, pyats_testbed):
         device_list = []
         # Load all devices from testbed file and try to connect to them
-        for device in genie_testbed.devices.values():
+        for device in pyats_testbed.devices.values():
             log.info(banner(f"Connect to device '{device.name}'"))
             try:
                 device.connect(log_stdout=False)
@@ -44,7 +38,7 @@ class common_setup(aetest.CommonSetup):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest='testbed',
+    parser.add_argument('--testbed', dest='pyats_testbed',
                         type=loader.load)
 
     args, unknown = parser.parse_known_args()

@@ -6,9 +6,6 @@ import logging
 from pyats import aetest
 from pyats.log.utils import banner
 
-# Genie Imports
-from genie.conf import Genie
-
 # To handle erorrs in connections
 from unicon.core import errors
 
@@ -30,17 +27,15 @@ class MyCommonSetup(aetest.CommonSetup):
     """
 
     @aetest.subsection
-    def establish_connections(self, testbed):
+    def establish_connections(self, pyats_testbed):
         """
         Establishes connections to all devices in testbed
         :param testbed:
         :return:
         """
 
-        genie_testbed = Genie.init(testbed)
-        self.parent.parameters['testbed'] = genie_testbed
         device_list = []
-        for device in genie_testbed.devices.values():
+        for device in pyats_testbed.devices.values():
             log.info(banner(
                 f"Connect to device '{device.name}'"))
             try:
@@ -80,13 +75,13 @@ class Routing(aetest.Testcase):
 
             output = device.learn('routing')
             rib = <<replace me>>  # noqa: E999
-
             for route in golden_routes:
                 if route not in rib:
                     self.failed(f'{route} is not found')
                 else:
                     pass
 
+        '''
         elif device.os == 'asa':
             output = device.parse('show route')
             rib = output['vrf']['default']['address_family']['ipv4']['routes']
@@ -96,11 +91,11 @@ class Routing(aetest.Testcase):
                     self.failed(f'{route} is not found')
                 else:
                     pass
-
+        '''
 
 if __name__ == '__main__':  # pragma: no cover
     parser = argparse.ArgumentParser()
-    parser.add_argument('--testbed', dest='testbed',
+    parser.add_argument('--testbed', dest='pyats_testbed',
                         type=loader.load)
 
     args, unknown = parser.parse_known_args()

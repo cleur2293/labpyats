@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import logging
 
-from genie.conf import Genie
+from pyats.topology.loader import load
 
 from os import path
 from os import mkdir
@@ -50,9 +50,9 @@ def main():
     log = logging.getLogger(__name__)
 
     testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
-    testbed = Genie.init(testbed_filename)
+    testbed = load(testbed_filename)
 
-    output_filename = 'collected_task5'
+    output_filename = 'collected_task4'
     open(output_filename, 'w').close()
 
     dir_name = 'gathered_commands'
