@@ -1,64 +1,52 @@
 #!/usr/bin/env python3
+
+# To get a logger for the script
 import logging
 
-from genie.conf import Genie
+# Import of PyATS library
+from pyats import aetest
+from pyats.log.utils import banner
 
-from os import path
-from os import mkdir
+# Genie Imports
+from genie.conf import Genie
 
 # To handle errors with connections to devices
 from unicon.core import errors
 
+import argparse
+from pyats.topology import loader
 
-def write_commands_to_file(abs_filename, command_output):
-    try:
-        with open(abs_filename, "a+") as file_output:
-            file_output.write(command_output)
-
-    except IOError as e:
-        log.error(f'Unable to write output to file: {abs_filename}.'
-                  f'Due to error: {e}')
-        exit(1)
+# Get your logger for your script
+global log
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
 
 
-def collect_device_commands(testbed, command_to_gather, filename):
-    abs_filename = path.join(path.dirname(__file__), filename)
-    log.info(f'filename: {abs_filename}')
-
-    log.info('Starting to collect output of the commands')
-
-    for device_name, device in testbed.devices.items():
-
-        try:
-            device.connect(log_stdout=False)
-        except errors.ConnectionError:
-            log.error(f'Failed to establish connection to: {device.name}.'
-                      f'Check connectivity and try again.')
-            continue
-
-        else:
-            log.info(f'Connected ok: {device_name}')
-            command_output = device.execute(command_to_gather, log_stdout=True)
-            write_commands_to_file(abs_filename, command_output + '\n####\n')
-
-
-def main():
-    global log
-    format = '%(asctime)s - %(filename)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=format)
-
-    log = logging.getLogger(__name__)
-
-    testbed_filename = '/home/cisco/labpyats/pyats_testbed.yaml'
-    testbed = Genie.init(testbed_filename)
-
-    output_filename = 'collected_task5'
-    open(output_filename, 'w').close()
-
-    dir_name = 'gathered_commands'
-
-    collect_device_commands(testbed, 'show inventory' , output_filename)
+class common_setup(aetest.CommonSetup):
+    @aetest.subsection
+    def establish_connections(self, testbed):
+        # Load testbed file which is passed as command-line argument
+        genie_testbed = Genie.init(testbed)
+        self.parent.parameters['testbed'] = genie_testbed
+        device_list = []
+        # Load all devices from testbed file and try to connect to them
+        for device in genie_testbed.devices.values():
+            log.info(banner(f"Connect to device '{device.name}'"))
+            try:
+                device.connect(log_stdout=False)
+            except errors.ConnectionError:
+                self.failed(f"Failed to establish "
+                            f"connection to '{device.name}'")
+            device_list.append(device)
+        # Pass list of devices to testcases
+        self.parent.parameters.update(dev=device_list)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--testbed', dest='testbed',
+                        type=loader.load)
+
+    args, unknown = parser.parse_known_args()
+
+    aetest.main(**vars(args))
