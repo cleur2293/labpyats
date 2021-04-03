@@ -32,13 +32,13 @@ class MyCommonSetup(aetest.CommonSetup):
     """
 
     @aetest.subsection
-    def establish_connections(self, pyats_testbed):
+    def establish_connections(self):
         """
         Establishes connections to all devices in testbed
         :param testbed:
         :return:
         """
-
+        pyats_testbed = self.parent.parameters.get('pyats_testbed')
         self.parent.parameters['testbed'] = pyats_testbed
         for device in pyats_testbed.devices.values():
             log.info(banner(
