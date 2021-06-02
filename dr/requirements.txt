@@ -98,7 +98,7 @@ traitlets==4.3.2
 Twisted==17.9.0
 ufw==0.36
 unattended-upgrades==0.1
-urllib3==1.25.9
+urllib3==1.26.5
 virl2-client==2.1.0
 wcwidth==0.1.7
 webencodings==0.5.1
