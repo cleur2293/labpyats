@@ -46,7 +46,7 @@ jupyter-nbextensions-configurator==0.4.1
 keyring==10.6.0
 keyrings.alt==3.0
 language-selector==0.1
-lxml==4.6.2
+lxml==4.6.5
 MarkupSafe==1.1.1
 mistune==0.8.4
 msgpack==0.5.6
